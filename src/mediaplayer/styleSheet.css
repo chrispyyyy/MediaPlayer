@@ -1,0 +1,64 @@
+
+/* 
+    Created on : May 6, 2018, 7:27:50 PM
+    Author     : Cristina
+*/
+
+.button{
+    -fx-background-color: transparent;
+    
+}
+#openFileButton{
+    -fx-background-image: url("../images/openFile.png");
+    -fx-backgroud-size: 30 30;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+#playButton{
+    -fx-background-image: url("../images/play.png");
+    -fx-backgroud-size: 40 40;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+#pauseButton{
+    -fx-background-image: url("../images/pause.png");
+    -fx-backgroud-size: 40 40;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+#stopButton{
+    -fx-background-image: url("../images/stop.png");
+    -fx-backgroud-size: 40 40;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+#replayButton{
+    -fx-background-image: url("../images/replay.png");
+    -fx-backgroud-size: 40 40;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+#slowButton{
+    -fx-background-image: url("../images/slow.png");
+    -fx-backgroud-size: 40 40;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+#fastButton{
+    -fx-background-image: url("../images/fast.png");
+    -fx-backgroud-size: 40 40;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+#exitButton{
+    -fx-background-image: url("../images/exit.png");
+    -fx-backgroud-size: 40 40;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+#volumeButton{
+    -fx-background-image: url("../images/volume.png");
+    -fx-backgroud-size: 40 40;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
