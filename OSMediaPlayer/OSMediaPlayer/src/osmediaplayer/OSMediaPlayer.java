@@ -9,6 +9,7 @@ import java.io.File;
 import javafx.application.Application;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.property.DoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -32,6 +33,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -45,6 +47,7 @@ public class OSMediaPlayer extends Application {
     private Media media;
     private MediaPlayer mediaPlayer;
     private MediaView mediaView;
+    private String filePath;
     private Slider slider;
     private Duration duration;
     private Label label_2;
@@ -55,12 +58,11 @@ public class OSMediaPlayer extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        VBox vBox = new VBox();
-        HBox hBox3 = new HBox();
 
-        hBox3.setTranslateX(10);
-        hBox3.setPrefWidth(100);
+        VBox vBox = new VBox();
+
         media = new Media(new File("C:\\Users\\Cristina\\Videos\\Otavia - Abstract video art.mp4").toURI().toString());
+
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
         mediaView = new MediaView(mediaPlayer);
@@ -105,20 +107,51 @@ public class OSMediaPlayer extends Application {
         HBox hBox2 = new HBox();
         hBox2.setTranslateX(60);
 
-        ImageView icon1 = new ImageView(new Image("skip_back.png"));
-        hBox2.setMargin(icon1, new Insets(5));
-        icon1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        ImageView icon0 = new ImageView(new Image("openFile.png"));
+        icon0.autosize();
+        icon0.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                mediaPlayer.seek(mediaPlayer.getCurrentTime().divide(2));
+                mediaPlayer.stop();
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Open File Dialog");
+                Stage stage = (Stage) icon0.getScene().getWindow();
+                FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Select a video file", "*.mp4", "*.m4p", "*.m4v", "*.avi", "*.wmv");
+                fileChooser.getExtensionFilters().add(filter);
+                File file = fileChooser.showOpenDialog(stage);
+                filePath = file.toURI().toString();
+                if (filePath != null) {
+                    Media media = new Media(filePath);
+                    mediaPlayer = new MediaPlayer(media);
+                    mediaView.setMediaPlayer(mediaPlayer);
+                   mediaPlayer.play();
+                }
             }
         });
 
-        ImageView icon2 = new ImageView(new Image("play.png"));
-        hBox2.setMargin(icon2, new Insets(5));
-        icon2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        ImageView icon1 = new ImageView(new Image("skip_back.png"));
+
+        hBox2.setMargin(icon1,
+                new Insets(5));
+        icon1.setOnMouseClicked(
+                new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(MouseEvent event
+            ) {
+                mediaPlayer.seek(mediaPlayer.getCurrentTime().divide(2));
+            }
+        }
+        );
+
+        ImageView icon2 = new ImageView(new Image("play.png"));
+
+        hBox2.setMargin(icon2,
+                new Insets(5));
+        icon2.setOnMouseClicked(
+                new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event
+            ) {
                 status = mediaPlayer.getStatus();
                 if (status == MediaPlayer.Status.UNKNOWN) {
                     return;
@@ -128,119 +161,164 @@ public class OSMediaPlayer extends Application {
                     mediaPlayer.play();
                 }
             }
-        });
+        }
+        );
 
         ImageView icon3 = new ImageView(new Image("pause.png"));
-        hBox2.setMargin(icon3, new Insets(5));
-        icon3.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+        hBox2.setMargin(icon3,
+                new Insets(5));
+        icon3.setOnMouseClicked(
+                new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(MouseEvent event
+            ) {
                 mediaPlayer.pause();
             }
-        });
+        }
+        );
 
         ImageView icon4 = new ImageView(new Image("stop.png"));
-        hBox2.setMargin(icon4, new Insets(5));
-        icon4.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+        hBox2.setMargin(icon4,
+                new Insets(5));
+        icon4.setOnMouseClicked(
+                new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(MouseEvent event
+            ) {
                 mediaPlayer.stop();
             }
-        });
+        }
+        );
 
         ImageView icon5 = new ImageView(new Image("skip_forward.png"));
-        hBox2.setMargin(icon5, new Insets(5));
-        icon5.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+        hBox2.setMargin(icon5,
+                new Insets(5));
+        icon5.setOnMouseClicked(
+                new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(MouseEvent event
+            ) {
                 mediaPlayer.seek(mediaPlayer.getCurrentTime().multiply(2));
             }
-        });
+        }
+        );
 
         ImageView icon6 = new ImageView(new Image("slow.png"));
-        hBox2.setMargin(icon6, new Insets(5));
-        icon6.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+        hBox2.setMargin(icon6,
+                new Insets(5));
+        icon6.setOnMouseClicked(
+                new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(MouseEvent event
+            ) {
                 mediaPlayer.setRate(.75);
             }
-        });
+        }
+        );
         ImageView icon7 = new ImageView(new Image("fast.png"));
-        hBox2.setMargin(icon7, new Insets(5));
-        icon6.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+        hBox2.setMargin(icon7,
+                new Insets(5));
+        icon6.setOnMouseClicked(
+                new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(MouseEvent event
+            ) {
                 mediaPlayer.setRate(1.5);
             }
-        });
+        }
+        );
 
         ImageView icon8 = new ImageView(new Image("replay.png"));
-        hBox2.setMargin(icon8, new Insets(5));
-        icon8.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+        hBox2.setMargin(icon8,
+                new Insets(5));
+        icon8.setOnMouseClicked(
+                new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(MouseEvent event
+            ) {
                 mediaPlayer.seek(Duration.ZERO);
             }
-        });
-        ImageView icon10 = new ImageView(new Image("exit.png"));
-        icon10.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                System.exit(0);
-            }
-        });
-        
-        
+        }
+        );
+
         ImageView icon9 = new ImageView(new Image("fullscreen.png"));
-        hBox2.setMargin(icon9, new Insets(5));
-        icon9.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+        hBox2.setMargin(icon9,
+                new Insets(5));
+        icon9.setOnMouseClicked(
+                new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(MouseEvent event
+            ) {
                 if (primaryStage.isFullScreen()) {
                     primaryStage.setFullScreen(false);
                     mediaView.setFitHeight(630);
                     mediaView.setFitWidth(1000);
                     icon9.setImage(new Image("fullscreen.png"));
-                    
 
                 } else {
                     primaryStage.setFullScreen(true);
                     mediaView.setFitHeight(500);
                     mediaView.setFitWidth(1510);
+
                     icon9.setImage(new Image("minimise.png"));
-                    
+
                 }
             }
-        });
-       
+        }
+        );
+
         Slider volume = new Slider();
 
-        volume.setTranslateX(300);
-        volume.setTranslateY(15);
-        volume.setPrefWidth(100);
-        volume.setValue(30);
-        mediaPlayer.setVolume(30);
+        volume.setTranslateX(
+                300);
+        volume.setTranslateY(
+                15);
+        volume.setPrefWidth(
+                100);
+        volume.setValue(
+                30);
+        mediaPlayer.setVolume(
+                30);
 
         Label label_3 = new Label("Volume:");
-        label_3.setTranslateX(290);
-        label_3.setTranslateY(15);
-        label_4 = new Label();
-        label_4.setTranslateX(310);
-        label_4.setTranslateY(15);
-        label_4.setText("30");
 
-        volume.valueProperty().addListener(new InvalidationListener() {
-            @Override
-            public void invalidated(Observable observable) {
-                if (volume.isValueChanging()) {
-                    mediaPlayer.setVolume(volume.getValue() / 100.0);
-                    label_4.setText((int) volume.getValue() + "");
+        label_3.setTranslateX(
+                290);
+        label_3.setTranslateY(
+                15);
+        label_4 = new Label();
+
+        label_4.setTranslateX(
+                310);
+        label_4.setTranslateY(
+                15);
+        label_4.setText(
+                "30");
+
+        volume.valueProperty()
+                .addListener(new InvalidationListener() {
+                    @Override
+                    public void invalidated(Observable observable
+                    ) {
+                        if (volume.isValueChanging()) {
+                            mediaPlayer.setVolume(volume.getValue() / 100.0);
+                            label_4.setText((int) volume.getValue() + "");
+                        }
+                    }
                 }
-            }
-        });
-        mediaView.setOnDragOver(new EventHandler<DragEvent>() {
+                );
+        mediaView.setOnDragOver(
+                new EventHandler<DragEvent>() {
             @Override
-            public void handle(DragEvent event) {
+            public void handle(DragEvent event
+            ) {
                 Dragboard db = event.getDragboard();
 
                 if (db.hasFiles()) {
@@ -249,10 +327,13 @@ public class OSMediaPlayer extends Application {
                     event.consume();
                 }
             }
-        });
-        mediaView.setOnDragDropped(new EventHandler<DragEvent>() {
+        }
+        );
+        mediaView.setOnDragDropped(
+                new EventHandler<DragEvent>() {
             @Override
-            public void handle(DragEvent event) {
+            public void handle(DragEvent event
+            ) {
                 Dragboard db = event.getDragboard();
 
                 if (db.hasFiles()) {
@@ -298,17 +379,23 @@ public class OSMediaPlayer extends Application {
                     }
                 }
             }
-        });
-        hBox2.getChildren().addAll(icon1, icon2, icon3, icon4, icon5, icon6, icon7, icon8, icon9, label_3, volume, label_4);
-        hBox3.getChildren().addAll(icon10);
-        vBox.getChildren().addAll(hBox3, mediaView, hBox, hBox2);
-        vBox.setStyle("-fx-background-color:#ccc");
+        }
+        );
+        hBox2.getChildren()
+                .addAll(icon0, icon1, icon2, icon3, icon4, icon5, icon6, icon7, icon8, icon9, label_3, volume, label_4);
+
+        vBox.getChildren()
+                .addAll(mediaView, hBox, hBox2);
+        vBox.setStyle(
+                "-fx-background-color:#ccc");
 
         Scene scene = new Scene(vBox, 1000, 740);
 
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        scene.setOnKeyPressed(
+                new EventHandler<KeyEvent>() {
             @Override
-            public void handle(KeyEvent event) {
+            public void handle(KeyEvent event
+            ) {
                 if (event.getCode() == KeyCode.SPACE) {
                     status = mediaPlayer.getStatus();
                     if (status == MediaPlayer.Status.PAUSED) {
@@ -321,22 +408,26 @@ public class OSMediaPlayer extends Application {
                     mediaPlayer.setVolume(volume.getValue() + 5);
                     label_4.setText((int) volume.getValue() + 5 + "");
                     updateProgress();
-                } else if (event.getCode() == KeyCode.ESCAPE){
+                } else if (event.getCode() == KeyCode.ESCAPE) {
                     primaryStage.setFullScreen(false);
                     mediaView.setFitHeight(630);
                     mediaView.setFitWidth(1000);
                     icon9.setImage(new Image("fullscreen.png"));
                 }
             }
-        });
+        }
+        );
 
-        primaryStage.setTitle("Hello World!");
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.setTitle(
+                "OS Media Player");
+
         primaryStage.setScene(scene);
 
-        scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        scene.setOnMouseClicked(
+                new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(MouseEvent event
+            ) {
                 if (event.getClickCount() == 2) {
                     if (primaryStage.isFullScreen()) {
                         primaryStage.setFullScreen(false);
@@ -352,7 +443,8 @@ public class OSMediaPlayer extends Application {
                     }
                 }
             }
-        });
+        }
+        );
         primaryStage.show();
     }
 
